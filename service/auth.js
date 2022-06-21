@@ -2,7 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const{findUserByProperty,createNewUser}= require("./user")
-
+const error = require("../utils/error")
 
 //todo -> start from->1.47.42
 
@@ -13,9 +13,8 @@ const registerService=async(name,email,password)=>{
     let user = await findUserByProperty("email",email)
     console.log(user)
     if (user) {
-      const error= new Error("user already exist...")
-      error.status=400
-      throw error
+     
+      throw error("user already exist...")
     }
 
    
@@ -28,20 +27,31 @@ const registerService=async(name,email,password)=>{
 }
 
 const loginService=async({email,password})=>{
-    const user = await User.findOne({ email });
+  let user = await findUserByProperty("email",email)
    if (!user) {
-     return res.status(400).send({ message: "Invalid credentials..." });
+    
+    throw error("Invalid credentials...")
+    
    }
   
    const isMatched=await bcrypt.compare(password,user.password) 
   
   if(!isMatched){
-     return res.status(400).send({ message: "Invalid credentials..." });
+    const error= new Error("Invalid credentials...")
+    error.status=400
+    throw error
   }
   else{
-    delete user._doc.password
-    const token=jwt.sign(user._doc,"secretkey",{expiresIn:"1h"})
-    console.log(token)
+    const payload={
+      _id:user._id,
+      email:user.email, 
+      name:user.name,
+      roles:user.roles,
+      accountStatus:user.accountStatus,
+    }
+    //delete user._doc.password
+    const token=jwt.sign(payload,"secretkey",{expiresIn:"1h"})
+    
     return token
   }
 }

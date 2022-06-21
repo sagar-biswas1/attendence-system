@@ -10,7 +10,7 @@ const findUserByProperty=(key,value)=>{
 }
 
 const createNewUser=({name, email, password})=>{
-    console.log({name, email, password})
+    //console.log({name, email, password})
    const user = new User({ name, email, password });
    return user.save()
 }
