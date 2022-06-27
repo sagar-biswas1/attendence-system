@@ -1,7 +1,7 @@
 const error=(msg="Something went wrong",status=500)=>{
     const error= new Error(msg)
-    error.status=400
+    error.status=status
     return error
 }
 
-module.exports=error
+module.exports = error 

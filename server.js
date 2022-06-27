@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(routes)
 
 app.get("/health",verifyJwt, (req, res) => {
-  console.log({user: req.user})
+  //console.log({user: req.user})
   res.send("hello world");
 });
 

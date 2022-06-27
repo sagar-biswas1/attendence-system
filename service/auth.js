@@ -9,26 +9,24 @@ const error = require("../utils/error")
 
 
 
-const registerService=async(name,email,password)=>{
-    let user = await findUserByProperty("email",email)
-    console.log(user)
-    if (user) {
-     
-      throw error("user already exist...")
-    }
+const registerService = async (name, email, password, roles, accountStatus) => {
+  let user = await findUserByProperty("email", email);
+  // console.log(user)
+  if (user) {
+    throw error("user already exist...");
+  }
 
-   
-    const salt = await bcrypt.genSalt(10);
-    const hashPass = await bcrypt.hash(password, salt);
-    console.log({name, email, password,hashPass})
-    //user.password = hashPass;
+  const salt = await bcrypt.genSalt(10);
+  const hashPass = await bcrypt.hash(password, salt);
+  //console.log({name, email, password,hashPass})
+  //user.password = hashPass;
 
-   return createNewUser({name, email, password:hashPass})
-}
+  return createNewUser({ name, email, password: hashPass,roles,accountStatus });
+};
 
 const loginService=async({email,password})=>{
   let user = await findUserByProperty("email",email)
-   if (!user) {
+  if (!user) {
     
     throw error("Invalid credentials...")
     
