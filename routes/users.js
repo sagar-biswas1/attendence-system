@@ -18,7 +18,7 @@ router.patch("/:userId", async (req, res) => {})
  * @method Delete
  */
 
-router.delete("/:userId", async (req, res) => {})
+router.delete("/:userId", userController.deleteUserById);
 
 
 /**

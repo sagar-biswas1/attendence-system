@@ -54,7 +54,21 @@ const putUserById = (req, res, next) => {};
 
 const pactUserById = (req, res, next) => {};
 
-const deleteUserById = (req, res, next) => {};
+const deleteUserById =async (req, res, next) => {
+     const userId = req.params.userId;
+     
+     try{
+       const user = await userService.findUserByProperty("_id",userId);
+          if(!user){
+          throw  error("No user exists with this id.", 400);
+          }
+          await user.remove()
+       return res.status(203).json({message:"deleted successfully"});
+     }catch(e){
+        
+        next(e)
+     }
+};
 
 module.exports = {
   getUsers,

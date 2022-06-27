@@ -5,6 +5,10 @@ const findUsers=()=>{
     return User.find()
 }
 
+const deleteUserById=(id)=>{
+    return User.findOneAndRemove({ _id: id });
+}
+
 
 const findUserByProperty=(key,value)=>{
    // console.log({key,value})
@@ -28,4 +32,4 @@ const createNewUser=({name, email, password,roles,accountStatus})=>{
    return user.save()
 }
 
-module.exports = { findUsers,findUserByProperty, createNewUser };
+module.exports = { findUsers, findUserByProperty, createNewUser, deleteUserById };
