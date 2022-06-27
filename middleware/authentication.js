@@ -10,7 +10,7 @@ const verifyJwt = async (req, res, next) => {
 		const decodedUser = jwt.verify(token, 'secretkey');
 		//console.log(decodedUser);
 		const user = await User.findById(decodedUser._id);
-		console.log("from authwire",user)
+		// console.log("from authwire",user)
 		if (!user) {
 			return res.status(401).send({ message: 'unauthorized access' });
 		}

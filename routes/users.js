@@ -12,7 +12,8 @@ router.get("/:userId", userController.getUserById);
  * @method Patch
  */
 
-router.patch("/:userId", async (req, res) => {})
+router.patch("/:userId", userController.pactUserById)
+router.put("/:userId", userController.putUserById)
 /**
  * delete user by id
  * @method Delete

@@ -1,4 +1,5 @@
-const User= require("../models/user")
+const User= require("../models/user");
+const error = require("../utils/error");
 
 
 const findUsers=()=>{
@@ -7,6 +8,13 @@ const findUsers=()=>{
 
 const deleteUserById=(id)=>{
     return User.findOneAndRemove({ _id: id });
+}
+
+const updateUserById=(id,data)=>{
+    
+
+   
+    return User.findByIdAndUpdate(id,{...data},{new:true})
 }
 
 
@@ -32,4 +40,10 @@ const createNewUser=({name, email, password,roles,accountStatus})=>{
    return user.save()
 }
 
-module.exports = { findUsers, findUserByProperty, createNewUser, deleteUserById };
+module.exports = {
+  findUsers,
+  findUserByProperty,
+  createNewUser,
+  updateUserById,
+  deleteUserById,
+};
